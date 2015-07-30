@@ -21,6 +21,14 @@ h1 {
 var width = 960,
     height = 500;
 
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
+
+function zoomed() {
+  container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
 var projection = d3.geo.orthographic()
     .scale(248)
     .clipAngle(90);
@@ -75,7 +83,7 @@ function ready(error, world, names) {
             c.fillStyle = "#bbb", c.beginPath(), path(land), c.fill();
             c.fillStyle = "#f00", c.beginPath(), path(countries[i]), c.fill();
             c.strokeStyle = "#fff", c.lineWidth = .5, c.beginPath(), path(borders), c.stroke();
-            c.strokeStyle = "#000", c.lineWidth = 2, c.beginPath(), path(globe), c.stroke();
+            // c.strokeStyle = "#00f", c.lineWidth = 1, c.beginPath(), path(globe), c.stroke();
           };
         })
       .transition()
